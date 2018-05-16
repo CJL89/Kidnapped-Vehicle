@@ -80,7 +80,7 @@ void ParticleFilter::prediction(double delta_t, double std_pos[], double velocit
 			new_x = particles[i].x + (velocity / yaw_rate) *
 					(sin(particles[i].theta + (yaw_rate * delta_t)) - sin(particles[i].theta));
 			new_y = particles[i].y + (velocity / yaw_rate) *
-					(cos(particles[i].theta) - cos(yaw_rate * delta_t) + (yaw_rate * delta_t));
+					(cos(particles[i].theta) - cos(particles[i].theta + yaw_rate * delta_t));
 			new_theta = particles[i].theta + yaw_rate * delta_t;
 		}
 
@@ -114,7 +114,7 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 			double distance = dist(observations[i].x,
 									observations[i].y,
 									predicted[j].x,
-									predicted[i].y);
+									predicted[j].y);
 			// Checking whether or not the distance is lower than the min_distance previously set:
 			if (distance < min_distance) {
 				// Updating the min_distance if the distance is smaller;
